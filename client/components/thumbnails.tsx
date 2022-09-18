@@ -1,3 +1,4 @@
+import { PointerEvent, SetStateAction } from 'react';
 export const Thumbnails = ({ preview, setPreview }: IThumbnails) => {
 	// Remove uploaded image
 	const handleRemove = (event: PointerEvent<HTMLButtonElement>) => {
@@ -8,16 +9,14 @@ export const Thumbnails = ({ preview, setPreview }: IThumbnails) => {
 	};
 
 	return preview ? (
-		<div className="block">
-			<div className="is-flex is-flex-direction-row is-flex-wrap-wrap">
+		<div className="stack">
+			<div className="flex justify-center">
 				{preview.map((image, index) => (
-					<div key={image} className="box mx-3 has-text-centered">
-						<figure className="image is-128x128">
-							<img src={image} alt="Placeholder image" />
-						</figure>
+					<div key={index} className="flex flex-col items-center">
+							<img src={image} className="rounded" alt="Placeholder image" />
 						<button
 							type="button"
-							className="button is-small is-danger is-centered mr-3 mt-3"
+							className="btn btn-warning mr-3 mt-3"
 							id={image}
 							onClick={handleRemove}
 						>
@@ -29,3 +28,9 @@ export const Thumbnails = ({ preview, setPreview }: IThumbnails) => {
 		</div>
 	) : null;
 };
+
+export interface IThumbnails {
+	preview: string[];
+	setPreview: SetStateAction<any>
+	setFiles?: SetStateAction<any>
+  }

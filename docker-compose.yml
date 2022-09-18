@@ -12,42 +12,24 @@ services:
     ports:
       - 3000:3000
     environment:
-        API_URL: http://localhost:4000
+        API_URL: http://localhost:8080
 
-  laplacian_api:
-    image: 'node:lts-bullseye'
-    container_name: 'laplacian_api'
-    volumes:
-      - ./api:/api
-    working_dir: "/api"
-    environment:
-        DOMAIN_NAME: localhost
-        PORT: 4000
-        PROTOCOL: http
-        CLIENT_URL: http://localhost:3000
-        ANALYZER_URL: http://localhost:5000
-        IMG_PATH: "./images/"
-    entrypoint: "/bin/bash -c"
-    command:
-      - "npm start"
-    ports:
-      - 4000:4000
   laplacian_analyzer:
-    image: 'alpine:latest'
+    build: ./analyzer/
     container_name: 'laplacian_analyzer'
     volumes:
       - ./analyzer:/analyzer
     working_dir: "/analyzer"
     environment:
         DOMAIN_NAME: localhost
-        PORT: 5000
+        PORT: 8080
         PROTOCOL: http
-        API_URL: http://localhost:4000
+        CLIENT_URL: http://localhost:3000
     entrypoint: "/bin/ash"
     # command:
     #   - "npm start"
     ports:
-      - 5000:5000
+      - 8080:8080
 
 
 # Create secrets with:
