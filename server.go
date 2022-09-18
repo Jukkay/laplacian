@@ -8,34 +8,44 @@ import (
 	"math"
 )
 
+const treshold = 400.0
+
 func detectBlurFromFile(p string) {
 	img := gocv.IMRead(p, gocv.IMReadGrayScale)
 	blurDetector(img)
 }
 
-func detectBlurFromImageData(r *http.Request) {
+func detectBlurFromImageData(r *http.Request) bool {
 	buf := []byte(r.FormValue("photo"))
 	img, err := gocv.IMDecode(buf, gocv.IMReadGrayScale)
 	if err == nil {
-		blurDetector(img)
+		return blurDetector(img)
 	}
+	return false
 }
 
-func blurDetector(img gocv.Mat) {
+func blurDetector(img gocv.Mat) bool {
 	dest := gocv.NewMat()
 	mean := gocv.NewMat()
 	stddev := gocv.NewMat()
 	gocv.Laplacian(img, &dest, gocv.MatTypeCV16S, 1, 1, 0, gocv.BorderDefault)
 	gocv.MeanStdDev(dest, &mean, &stddev)
-	fmt.Printf("variance is probably %v\n", math.Pow(2, stddev.GetDoubleAt(0, 0)))
+	variance := math.Pow(2, stddev.GetDoubleAt(0, 0))
+	fmt.Printf("variance is probably %v\n", variance)
+	return (variance > treshold)
 }
 
 func blurHandler(w http.ResponseWriter, r *http.Request){
 	if r.Method != "POST" {
         http.Error(w, "Method is not supported.", http.StatusTeapot)
-        return
 	}
-	detectBlurFromImageData(r)
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	if detectBlurFromImageData(r) {
+		w.Write([]byte("{ \"blurry\":true }"))
+	} else {
+		w.Write([]byte("{ \"blurry\":false }"))
+	}
 }
 
 func main() {
