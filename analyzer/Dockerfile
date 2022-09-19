@@ -1,11 +1,9 @@
-FROM golang
+FROM gocv/opencv
 
-WORKDIR /laplacian
-# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
+WORKDIR /go/src/laplacian
+
 COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+RUN  go mod download && go mod verify
 
 COPY . .
-RUN go build -v -o /usr/local/bin/laplacian ./...
-
-CMD ["laplacian"]
+RUN go build -v -o /usr/local/bin/laplacian ./

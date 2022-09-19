@@ -20,25 +20,11 @@ services:
     volumes:
       - ./analyzer:/analyzer
     working_dir: "/analyzer"
-    environment:
-        DOMAIN_NAME: localhost
-        PORT: 8080
-        PROTOCOL: http
-        CLIENT_URL: http://localhost:3000
-    entrypoint: "/bin/ash"
-    # command:
-    #   - "npm start"
+    entrypoint: "/bin/bash -c"
+    command:
+      - "/usr/local/bin/laplacian"
     ports:
       - 8080:8080
-
-
-# Create secrets with:
-# printf "%s" "$(openssl rand -base64 20)" > mysql_password.secret
-# printf "%s" "$(openssl rand -base64 20)" > mysql_root_password.secret
-# printf "%s" "$(openssl rand -base64 10)" > server_token.secret
-
-# TLS certificate has to be created manually and added as a secret
-# openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out MyCertificate.crt -keyout MyKey.key
 
 # Build with:
 #   make install

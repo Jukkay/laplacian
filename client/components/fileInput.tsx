@@ -15,13 +15,12 @@ export const FileInput = () => {
 			setFileError(true);
 			return;
 		}
-		// Add files to formData
-		const imageData = new FormData();
-		for (let i = 0; i < files.length; i++) {
-			imageData.append('files', files[i], files[i].name);
-		}
+		// Add photo to formData
+		const payload = new FormData();
+		payload.append('photo', files[0]);
 		// Upload to server
-		const response = await API.post('/image', imageData);
+		const response = await API.post('/blur', payload);
+		console.log(response);
 		if (response.status == 200) {
 			if (response.data.blurry == true) setBlurry(true);
 		}
@@ -82,7 +81,7 @@ export const FileInput = () => {
 			</div>
 			<Thumbnails preview={preview} setPreview={setPreview} />
 			<div className="card shadow-md bg-warning text-primary-content">
-				{!blurry ?  
+				{blurry ?  
 				<div className="card-body">
 					<p>Image appears to be blurry. Please, consider taking a new picture. Products with good pictures sell a lot faster!</p>
 				</div> : null
