@@ -30,7 +30,7 @@ func detectBlurFromImageData(r *http.Request) (float64, error) {
 	buf := []byte(r.FormValue("photo"))
 	fmt.Printf("received from request: %v\n", buf)
 	img, err := gocv.IMDecode(buf, gocv.IMReadGrayScale)
-	if err == nil {
+	if err == nil  && !img.Empty(){
 		return blurDetector(img), nil
 	}
 	return 0.0, fmt.Errorf("Invalid image data")
