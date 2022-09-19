@@ -17,18 +17,16 @@ func detectBlurFromFile(p string) (float64, error) {
 		return 0.0, fmt.Errorf("Invalid file path")
 	}
 	return blurDetector(img), nil
+}
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	}
 
 func detectBlurFromImageData(r *http.Request) (float64, error) {
-	fmt.Printf("Request: %v\n", r)
-	r.ParseForm()
-	fmt.Printf("Form: %v\n", r.Form)
-	fmt.Printf("Form photo?: %v\n", r.Form["photo"])
 	buf := []byte(r.FormValue("photo"))
-	fmt.Printf("received from request: %v\n", buf)
+	fmt.Printf("form? %v\n", r.Form["photo"])
+	fmt.Printf("parsed form? %v\n", buf)
 	img, err := gocv.IMDecode(buf, gocv.IMReadGrayScale)
 	if err == nil  && !img.Empty(){
 		return blurDetector(img), nil
@@ -69,6 +67,7 @@ func blurHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func blurPathHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	if r.Method != "POST" {
 		http.Error(w, "Method is not supported.", http.StatusTeapot)
 		return
