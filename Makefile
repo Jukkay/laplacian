@@ -1,15 +1,16 @@
 create-client:
 	docker-compose up -d --force-recreate laplacian_client
 
-create-api:
-	docker-compose up -d --force-recreate laplacian_api
-
 create-analyzer:
+	docker build -t tori/laplacian_analyzer ./analyzer
 	docker-compose up -d --force-recreate laplacian_analyzer
 
-create: create-client create-api create-analyzer
+create: 
+	docker build -t tori/laplacian_analyzer ./analyzer
+	create-client create-analyzer
 
 up:
+	docker exec laplacian_analyzer bash -c "go build -v -o /usr/local/bin/laplacian /go/src/laplacian"
 	docker-compose up
 
 restart:

@@ -15,11 +15,10 @@ services:
         API_URL: http://localhost:8080
 
   laplacian_analyzer:
-    build: ./analyzer/
+    image: 'tori/laplacian_analyzer'
     container_name: 'laplacian_analyzer'
     volumes:
-      - ./analyzer:/analyzer
-    working_dir: "/analyzer"
+      - ./analyzer:/go/src/laplacian
     entrypoint: "/bin/bash -c"
     command:
       - "/usr/local/bin/laplacian"

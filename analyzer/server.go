@@ -24,11 +24,12 @@ func enableCors(w *http.ResponseWriter) {
 	}
 
 func detectBlurFromImageData(r *http.Request) (float64, error) {
+	r.ParseMultipartForm(10000000)
 	buf := []byte(r.FormValue("photo"))
-	fmt.Printf("form? %v\n", r.Form["photo"])
+	// fmt.Printf("form? %v\n", r.Form["photo"])
 	fmt.Printf("parsed form? %v\n", buf)
 	img, err := gocv.IMDecode(buf, gocv.IMReadGrayScale)
-	if err == nil  && !img.Empty(){
+	if err == nil {
 		return blurDetector(img), nil
 	}
 	return 0.0, fmt.Errorf("Invalid image data")
