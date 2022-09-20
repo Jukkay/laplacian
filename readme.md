@@ -24,3 +24,7 @@ Repository includes docker-compose and Makefile files that can be used to build 
 1. Clone the repository
 2. Use command line `make up` to build and run the project
 3. The app can be accessed at http://localhost:3000
+
+### Contributors
+
+@jukkay & @tpolonen
