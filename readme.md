@@ -27,4 +27,4 @@ Repository includes docker-compose and Makefile files that can be used to build 
 
 ### Contributors
 
-@jukkay & @tpolonen
+Jukkay & [tpolonen](https://github.com/tpolonen)
