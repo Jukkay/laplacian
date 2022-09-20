@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"gocv.io/x/gocv"
 	"math"
+	"bytes"
+	"io"
 )
 
 const treshold = 400.0
@@ -24,15 +26,21 @@ func enableCors(w *http.ResponseWriter) {
 	}
 
 func detectBlurFromImageData(r *http.Request) (float64, error) {
-	r.ParseMultipartForm(10000000)
-	buf := []byte(r.FormValue("photo"))
-	// fmt.Printf("form? %v\n", r.Form["photo"])
-	fmt.Printf("parsed form? %v\n", buf)
-	img, err := gocv.IMDecode(buf, gocv.IMReadGrayScale)
-	if err == nil {
-		return blurDetector(img), nil
+	r.ParseMultipartForm(0)
+	file, _, err := r.FormFile("photo")
+	if err != nil {
+		return 0.0, fmt.Errorf("Invalid image data")
 	}
-	return 0.0, fmt.Errorf("Invalid image data")
+	defer file.Close()
+	buf := bytes.NewBuffer(nil)
+	if _, err := io.Copy(buf, file); err != nil {
+    	return 0.0, err
+	}
+	img, err := gocv.IMDecode(buf.Bytes(), gocv.IMReadGrayScale)
+	if img.Empty() {
+		return 0.0, fmt.Errorf("Empty image")
+	}
+	return blurDetector(img), nil
 }
 
 func blurDetector(img gocv.Mat) float64 {
