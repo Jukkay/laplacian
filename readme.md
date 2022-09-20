@@ -1,6 +1,6 @@
 # Laplacian
 
-Laplacian is a small proof of concept type of project built to learn more about interfacing between pieces of software built with different technologies. It's also our team's entry to Schibsted Challenge.
+Laplacian is a small proof of concept type of project built to learn more about interfacing between pieces of software written with different languages. It's also our team's entry to Schibsted Challenge.
 
 ### What does it do?
 
