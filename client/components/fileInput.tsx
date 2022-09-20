@@ -16,20 +16,12 @@ export const FileInput = () => {
 			return;
 		}
 		const payload = new FormData();
-		const reader = new FileReader();
-  		reader.onload = async(e) => {
-    		console.log(e.target.result);
-			payload.append('photo', e.target.result);
-			const response = await API.post('/blur', payload);
-			console.log(response);
-			if (response.status == 200) {
-				if (response.data.blurry == true) setBlurry(true);
-			}
-  		};
-  		reader.readAsBinaryString(files[0]);
-		// Add photo to formData
-
-		// Upload to server
+		payload.append('photo', files[0]);
+		const response = await API.post('/blur', payload);
+		console.log(response);
+		if (response.status == 200) {
+			if (response.data.blurry == true) setBlurry(true);
+		}
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
