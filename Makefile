@@ -19,7 +19,7 @@ clean:
 	docker-compose down --remove-orphans
 	docker image rm -f tori/laplacian_analyzer
 
-install-client:
+install:
 	docker-compose run --rm laplacian_client "npm install"
 
 goto-client:

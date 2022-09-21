@@ -22,5 +22,6 @@ Frontend is built using Next.js, React and TypeScript. Backend is written in Gol
 Repository includes docker-compose and Makefile files that can be used to build and run the project. Docker is required to take advantage of these.
 
 1. Clone the repository
-2. Use command line `make up` to build and run the project
-3. The app can be accessed at http://localhost:3000
+2. Use command line `make install` to install client
+3. Use command line `make up` to build and run the project
+4. The app can be accessed at http://localhost:3000
