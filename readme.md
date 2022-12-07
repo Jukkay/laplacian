@@ -1,4 +1,5 @@
 # Laplacian
+![Laplacian](https://img.shields.io/github/languages/top/Jukkay/laplacian)
 
 Laplacian is a small proof of concept type of project built to learn more about interfacing between pieces of software written in different languages. It's also our team's entry to Schibsted Challenge.
 
