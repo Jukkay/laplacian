@@ -4,11 +4,11 @@ Laplacian is a small proof of concept type of project built to learn more about 
 
 ### What does it do?
 
-This app takes in an image file from user. When user uploads the file, it's analyzed for blurryness using laplacian algoritm. If the image seems to be blurry, user gets notified of this and is encouraged to take a new picture. If image is not blurry, the image is just uploaded.
+When the user uploads the file, it's analyzed for blurriness using the laplacian algorithm. If the image seems to be blurry, user gets notified of this and is encouraged to take a new picture. If image is not blurry, the image is just uploaded.
 
 ### What is it built with?
 
-Frontend is built using Next.js, React and TypeScript. Backend is written in Golang and it uses OpenCV's laplacian function. Connection between frontend and backend is implemented using Go's built in http server and API requests.
+The front end is built using Next.js, React, and TypeScript. The back end is written in Golang and it uses OpenCV's Laplacian function. The connection between the front end and the back end is implemented using Go's built in http server and API requests.
 
 - React
 - TypeScript
@@ -19,11 +19,11 @@ Frontend is built using Next.js, React and TypeScript. Backend is written in Gol
 
 ### How can I run it?
 
-Repository includes docker-compose and Makefile files that can be used to build and run the project. Docker is required to take advantage of these.
+The repository includes docker-compose and Makefile files that can be used to build and run the project. Docker is required to take advantage of these.
 
 1. Clone the repository
-2. Use command line `make install` to install client
-3. Use command line `make up` to build and run the project
+2. Use the command line `make install` to install the client
+3. Use the command line `make up` to build and run the project
 4. The app can be accessed at http://localhost:3000
 
 ### Contributors
